@@ -1,0 +1,49 @@
+from numpy import *
+import operator
+def createDataSet()://输入数据
+    group=array([[1.0,1.1],[1.0,1.0],[0,0],[0,0.1]])
+    labels=['A','A','B','B']
+    return group,labels
+
+def classify0(inX,dataSet,labels,K)://基础的knn算法 inx是用来比较数据 dataset是样本数据 labels是标签 K是近邻程度
+    dataSetSize=dataSet.shape[0]//读取数据大小
+    diffMat=tile(inX,(dataSetSize,1))-dataSet//tile用来扩展数据将数据扩展为和样本一样大的矩阵
+    sqDiffMat=diffMat**2//平方
+    sqDistances=sqDiffMat.sum(axis=1)//行加
+    distances=sqDistances**0.5//开根号
+    sortedDistIndicies=distances.argsort()//从小到大排列返回下标
+    classCount={}//创建一个字典
+    for i in range(K):
+        voteIlabel=labels[sortedDistIndicies[i]]//读取标签
+        classCount[voteIlabel]=classCount.get(voteIlabel,0)+1//把标签分类放入字典中
+    sortedClassCount=sorted(classCount,key=operator.itemgetter(0),reverse=True)//以字典中第一类作比较找出来多的那个
+    return  sortedClassCount[0][0]//返回多的
+   
+
+
+def file2matrix(filename)://用来读取数据
+    fr=open(filename)
+    arrayOlines=fr.readlines()
+    numberoflines=len(arrayOlines)
+    returnmat=zeros((numberoflines,3))
+    classlabelvector=[]
+    index=0
+    for line in arrayOlines:
+        line=line.strip()
+        listfromline=line.split('\t')
+        returnmat[index,:]=listfromline[0:3]
+        classlabelvector.append(int(listfromline[-1]))
+        index+=1
+
+    return returnmat,classlabelvector
+
+import KNN
+datmat,datlab=KNN.file2matrix('datingTestSet2.txt')//只能用第二个了，用第一组数据会出现阈值问题
+import matplotlib
+import matplotlib.pyplot as plt
+fig=plt.figure()
+ax=fig.add_subplot(111)
+ax.scatter(datmat[:,1],datmat[:,2])
+plt.show()
+import numpy
+ax.scatter(datmat[:,0],datmat[:,1],15.0*numpy.array(datlab),15.0*numpy.array(datlab))
