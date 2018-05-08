@@ -57,3 +57,16 @@ def autoNorm(dataSet)://数据归一化处理
     normdataset=dataSet-tile(minvals,(m,1))
     normdataset=normdataset/tile(ranges,(m,1))
     return normdataset,ranges,minvals
+
+def datingClassTest():
+    horatio=0.050
+    datamat,datlab=file2matrix('datingTestSet2.txt')
+    normat,ranges,minvals=autoNorm(datamat)
+    m=normat.shape[0]
+    numtextvecs=int(m*horatio)
+    errorcount=0.0
+    for i in range(numtextvecs):
+        classifierresult=classify0(normat[i,:],normat[numtextvecs:m,:],datlab[numtextvecs:m],3)
+        print('the classifierresult came back with : %d , the real answer is : %d' % (classifierresult , datlab[i]) )
+        if(classifierresult!=datlab[i]):errorcount+=1.0
+    print('the total error rate is : %f' %(errorcount/float(numtextvecs)))
