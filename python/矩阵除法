@@ -1,0 +1,2 @@
+linalg.solve(matA,matB)
+在numpy中/意味着点除只有用上式才是矩阵除法
