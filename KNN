@@ -16,7 +16,8 @@ def classify0(inX,dataSet,labels,K)://基础的knn算法 inx是用来比较数�
     for i in range(K):
         voteIlabel=labels[sortedDistIndicies[i]]//读取标签
         classCount[voteIlabel]=classCount.get(voteIlabel,0)+1//把标签分类放入字典中
-    sortedClassCount=sorted(classCount,key=operator.itemgetter(0),reverse=True)//以字典中第一类作比较找出来多的那个
+    sortedClassCount=sorted(classCount.items(),key=operator.itemgetter(1),reverse=True)
+    //sortedClassCount=sorted(classCount,key=operator.itemgetter(0),reverse=True)这样写也可以但是后面调用时会出现问题，以字典中第一类作比较找出来多的那个
     return  sortedClassCount[0][0]//返回多的
    
 
