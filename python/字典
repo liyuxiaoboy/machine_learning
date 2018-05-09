@@ -1,0 +1,59 @@
+#先回忆下列表的操作
+animals=["cat","dog","rabbit"]          #找到list中的某个值(第一种方法)
+for animal in animals:
+    if(animal=="cat"):
+        print("Cat found")
+
+animals=["cat","dog","rabbit"]          #找到list中的某个值（第二种方法）
+if "cat" in animals:
+    print("Cat found")
+
+student=["Tom","Jim","Sue","Ann"]      #找到某人所得分数
+scores=[70,80,85,75]
+indexes=[0,1,2,3]
+name="Sue"
+score=0
+for i in indexes:                
+    if student[i]==name:
+        score=scores[i]
+print(score)
+
+#字典结构
+scores={}   #<class 'dict'>  Dictionaries 字典结构  key value (键值一一对应)
+scores["Jim"]=80
+scores["Sue"]=85
+scores["Ann"]=75
+print(scores.keys()) #dict_keys(['Jim', 'Sue', 'Ann']) 字典中的key
+print(scores)       #{'Jim': 80, 'Sue': 85, 'Ann': 75} 输出字典中的键和值
+print(scores["Sue"]) #输出键所对应的的值  结果为 85
+
+students={"Tom":60,"Jim":70}   #创建字典并初始化键值
+students["Tom"]=65          #更改字典中某个键的值
+print('Tom' in students)     #判断键是否在字典中
+
+#用字典结构做统计数
+pantry=["apple","orange","grape","apple","orange","apple","tomato","patato","grape"]
+pantry_counts={}
+for item in pantry:         #对list进行遍历
+    if item in pantry_counts:
+        pantry_counts[item]=pantry_counts[item]+1
+    else:
+        pantry_counts[item]=1
+print(pantry_counts)               #输出结构{'apple': 3, 'orange': 2, 'grape': 2, 'tomato': 1, 'patato': 1}
+
+补充：dict和set
+
+和list比较，dict有以下几个特点：
+         （1）查找和插入的速度极快，不会随着key的增加而变慢；
+         （2）需要占用大量的内存，内存浪费多。
+而list相反：
+         （1）查找和插入的时间随着元素的增加而增加；
+         （2）占用空间小，浪费内存很少。
+#set和dict类似，也是一组key的集合，但不存储value。由于key不能重复，所以，在set中，没有重复的key
+#set可以看成数学意义上的无序和无重复元素的集合，因此，两个set可以做数学意义上的交集、并集等操作
+s1=set([1,2,3,4,5,6])    #创建一个set，需要提供一个list作为输入集合
+s2=set([2,3,4,9,8])
+print(s1&s2)   #交集结果 {{2, 3, 4}
+print(s1|s2)   #并集结果 {1, 2, 3, 4, 5, 6, 8, 9}
+s1.add(11)     #add(key)方法可以添加元素到set中，可以重复添加，但不会有效果
+s1.remove(1)   #通过remove(key)方法可以删除元素
