@@ -29,7 +29,7 @@ def splitDataSet(dataset,axis,value)://按照某一特征重新划分数据集
             retdataset.append(reducedfeatvec)
     return retdataset
 
-def chooseBestFeatureToSplit(dataset)：//选择最好的特征进行下一步分类
+def chooseBestFeatureToSplit(dataset)://选择最好的特征进行分类
     numfeatures=len(dataset[0])-1
     bestinfogain=0.0
     bestfeature=-1
@@ -42,7 +42,7 @@ def chooseBestFeatureToSplit(dataset)：//选择最好的特征进行下一步�
             prob=len(subdataset)/float(len(dataset))
             newentropy+=prob*calcShannonEnt(subdataset)
         infogain=baseentropy-newentropy
-        if(infogain>bestinfogain)
+        if(infogain > bestinfogain):
             bestinfogain=infogain
             bestfeature=i
     return bestfeature
