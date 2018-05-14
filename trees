@@ -29,8 +29,9 @@ def splitDataSet(dataset,axis,value)://按照某一特征重新划分数据集
             retdataset.append(reducedfeatvec)
     return retdataset
 
-def chooseBestFeatureToSplit(dataset)://选择最好的特征进行分类
+def chooseBestFeatureToSplit(dataset):
     numfeatures=len(dataset[0])-1
+    baseentropy=calcShannonEnt(dataset)
     bestinfogain=0.0
     bestfeature=-1
     for i in range(numfeatures):
