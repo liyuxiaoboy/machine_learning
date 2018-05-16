@@ -36,7 +36,7 @@ def chooseBestFeatureToSplit(dataset)://返回最好的分组标准
     bestfeature=-1
     for i in range(numfeatures):
         featlist=[example[i] for example in dataset]
-        uniquevals=set(featlist)
+        uniquevals=set(featlist)//筛选唯一特征
         newentropy=0.0
         for value in uniquevals:
             subdataset=splitDataSet(dataset,i,value)
