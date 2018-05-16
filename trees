@@ -20,7 +20,7 @@ def createDataSet()://创建一个测试数据
     labels=['no surfacing','fippers']
     return dataset,labels
 
-def splitDataSet(dataset,axis,value)://按照某一特征重新划分数据集
+def splitDataSet(dataset,axis,value)://按照某一特征重新划分数据集axis是特征所在位置 value是特征取值
     retdataset=[]
     for featvec in dataset:
         if featvec[axis]==value:
@@ -30,20 +30,20 @@ def splitDataSet(dataset,axis,value)://按照某一特征重新划分数据集
     return retdataset
 
 def chooseBestFeatureToSplit(dataset)://返回最好的分组标准
-    numfeatures=len(dataset[0])-1
-    baseentropy=calcShannonEnt(dataset)
+    numfeatures=len(dataset[0])-1//特征数量
+    baseentropy=calcShannonEnt(dataset)//计算初始熵
     bestinfogain=0.0
     bestfeature=-1
     for i in range(numfeatures):
-        featlist=[example[i] for example in dataset]
-        uniquevals=set(featlist)//筛选唯一特征
+        featlist=[example[i] for example in dataset]//取出第i个特征做一个列表
+        uniquevals=set(featlist)//利用set（）做出唯一数据
         newentropy=0.0
         for value in uniquevals:
-            subdataset=splitDataSet(dataset,i,value)
+            subdataset=splitDataSet(dataset,i,value)//按特定特征划分数据
             prob=len(subdataset)/float(len(dataset))
-            newentropy+=prob*calcShannonEnt(subdataset)
+            newentropy+=prob*calcShannonEnt(subdataset)//计算熵
         infogain=baseentropy-newentropy
         if(infogain > bestinfogain):
-            bestinfogain=infogain
+            bestinfogain=infogain//更新
             bestfeature=i
     return bestfeature
