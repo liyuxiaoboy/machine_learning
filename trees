@@ -24,8 +24,8 @@ def splitDataSet(dataset,axis,value)://按照某一特征重新划分数据集
     retdataset=[]
     for featvec in dataset:
         if featvec[axis]==value:
-            reducedfeatvec=featvec[:axis]
-            reducedfeatvec.extend(featvec[axis+1:])
+            reducedfeatvec=featvec[:axis]//提取axis之前的特征
+            reducedfeatvec.extend(featvec[axis+1:])//提取axis之后的特征
             retdataset.append(reducedfeatvec)
     return retdataset
 
