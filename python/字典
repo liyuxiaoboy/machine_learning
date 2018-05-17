@@ -1,3 +1,5 @@
+字典的嵌套结构的使用https://blog.csdn.net/lilong117194/article/details/77033791
+
 #先回忆下列表的操作
 animals=["cat","dog","rabbit"]          #找到list中的某个值(第一种方法)
 for animal in animals:
