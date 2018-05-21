@@ -1,4 +1,5 @@
 from math import log
+import operator
 
 def calcShannonEnt(dataset)://计算香农熵
     numentries=len(dataset)//计算数据总量（在这里定义是为了节省时间）
@@ -47,3 +48,12 @@ def chooseBestFeatureToSplit(dataset)://返回最好的分组标准
             bestinfogain=infogain//更新
             bestfeature=i
     return bestfeature
+    
+def maiorityCnt(classList):
+    classCount={}
+    for vote in classList:
+        if vote not in classCount.keys():
+            classCount[vote]=0
+        classCount[vote]+=1
+    sortedClassCount=sorted(classCount.items(),key=operator.itemgetter(1),reverse=True)
+    return  sortedClassCount[0][0]
