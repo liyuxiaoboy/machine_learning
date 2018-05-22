@@ -21,7 +21,7 @@ def createDataSet()://创建一个测试数据
     labels=['no surfacing','fippers']
     return dataset,labels
 
-def splitDataSet(dataset,axis,value)://按照某一特征重新划分数据集axis是特征所在位置 value是特征取值
+def splitDataSet(dataset,axis,value)://按照某一特征重新划分数据集 axis是特征所在位置 value是特征取值
     retdataset=[]
     for featvec in dataset:
         if featvec[axis]==value:
@@ -49,7 +49,7 @@ def chooseBestFeatureToSplit(dataset)://返回最好的分组标准
             bestfeature=i
     return bestfeature
     
-def maiorityCnt(classList):
+def maiorityCnt(classList)://选取出现最多的标签作为主标签
     classCount={}
     for vote in classList:
         if vote not in classCount.keys():
@@ -57,3 +57,26 @@ def maiorityCnt(classList):
         classCount[vote]+=1
     sortedClassCount=sorted(classCount.items(),key=operator.itemgetter(1),reverse=True)
     return  sortedClassCount[0][0]
+
+def createTree(dataSet,labels)://创建决策树
+    classList=[example[-1] for example in dataSet ]
+    if classList.count(classList[0])==len(classList):
+        return classList[0]
+    if len(dataSet[0])==1:
+        return maiorityCnt(classList)
+
+    bestFeat=chooseBestFeatureToSplit(dataSet)
+    bestFeatLabel=labels[bestFeat]
+
+    myTree={bestFeatLabel:{}}
+    del(labels[bestFeat])
+
+    feaValues=[example[bestFeat] for example in dataSet]
+    uniqueValues=set(feaValues)
+
+    for value in uniqueValues:
+        subLabels=labels[:]
+        myTree[bestFeatLabel][value]=createTree(splitDataSet(dataSet,bestFeat,value),subLabels)
+
+    return myTree
+
