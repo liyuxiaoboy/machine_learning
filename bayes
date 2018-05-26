@@ -48,3 +48,15 @@ def trainNB0(trainMatrix,trainCategory)://训练分类器函数
     p1Vect=p1Num/p1Denom
     p0Vect=p0Num/p0Denom
     return p0Vect,p1Vect,pAbusive//提供了在已知分类情况下0和1中单词出现概率，和两类分类的概率（此函数只用于二分类问题）
+    
+    
+>>> from numpy import *
+>>> from imp import reload
+>>> reload(bayes)
+>>> listpost,listclass=bayes.loadDataSet()
+>>> mvl=bayes.createVocabList(listpost)
+>>> trainMat=[]
+>>> for postinDoc in listpost:
+...     trainMat.append(bayes.setOfWords2Vec(mvl,postinDoc))
+...
+>>> p0v,p01,pab=bayes.trainNB0(trainMat,listclass)
