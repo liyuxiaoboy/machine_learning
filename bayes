@@ -59,4 +59,4 @@ def trainNB0(trainMatrix,trainCategory)://训练分类器函数
 >>> for postinDoc in listpost:
 ...     trainMat.append(bayes.setOfWords2Vec(mvl,postinDoc))
 ...
->>> p0v,p01,pab=bayes.trainNB0(trainMat,listclass)
+>>> p0v,p1v,pab=bayes.trainNB0(trainMat,listclass)
