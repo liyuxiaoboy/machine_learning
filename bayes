@@ -61,7 +61,7 @@ def trainNB0(trainMatrix,trainCategory)://训练分类器函数
 ...
 >>> p0v,p1v,pab=bayes.trainNB0(trainMat,listclass)
 
-def classifyNB(vec2Classify,p0Vec,p1Vec,pClass1):
+def classifyNB(vec2Classify,p0Vec,p1Vec,pClass1)://对文本进行分类
     p1=sum(vec2Classify*p1Vec)+log(pClass1)
     p0=sum(vec2Classify*p0Vec)+log(1.0-pClass1)
     if p1>p0:
@@ -69,13 +69,13 @@ def classifyNB(vec2Classify,p0Vec,p1Vec,pClass1):
     else:
         return 0
 
-def testingNB():
+def testingNB()://便利函数
     listOPosts,listClasses=loadDataSet()
     myVocabList=createVocabList(listOPosts)
     trainMat=[]
     for postinDoc in listOPosts:
         trainMat.append(setOfWords2Vec(myVocabList,postinDoc))
-    p0V,p1V,pAb=trainNB0(array(trainMat),array(listClasses))
+    p0V,p1V,pAb=trainNB0(array(trainMat),array(listClasses))//实测此处用array矩阵化如果去除无影响，猜测可能是为了运算效率考虑
     testEntry=['love','my','dalmation']
-    thisDoc=array(setOfWords2Vec(myVocabList,testEntry))
-    print(testEntry,'classified as :',classifyNB(thisDoc,p0V,p1V,pAb))
+    thisDoc=array(setOfWords2Vec(myVocabList,testEntry))//先化为向量
+    print(testEntry,'classified as :',classifyNB(thisDoc,p0V,p1V,pAb))//进行分类
