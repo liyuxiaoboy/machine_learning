@@ -35,6 +35,20 @@ def stocGradAscent0(dataMatrix,classLabels)://随机梯度下降法
         weights=weights+alpha*error*dataMatrix[i]
     return weights
 
+def stocGradAscent1(dataMatrix,classlabels,numIter=150)://改进了迭代次数和真正随机的随机梯度方法
+    m,n=shape(dataMatrix)
+    weights=ones(n)
+    for j in range(numIter):
+        dataIndex=list(range(m))
+        for i in range(m):
+            alpha=4/(1.0+j+i)+0.01
+            randIndex=int(random.uniform(0,len(dataIndex)))
+            h=sigmoid(sum(dataMatrix[randIndex]*weights))
+            error=classlabels[randIndex]-h
+            weights=weights+alpha*error*dataMatrix[randIndex]
+            del (dataIndex[randIndex])
+    return weights
+    
 def plotBestFit(wei)://画图
     import matplotlib.pyplot as plt
     weights=wei
@@ -60,16 +74,17 @@ def plotBestFit(wei)://画图
     plt.xlabel('X1');plt.xlabel('X2');
     plt.show()
 
-
 def sample():
     dataArr,labelMat=loadDataSet()
-    weights=gradAscent(array(dataArr),labelMat)//调用批量梯度
+    weights=gradAscent(array(dataArr),labelMat)
     print(weights)
-    plotBestFit(weights.getA())//getA（）是区别，作用是把矩阵转化为数组列表
-    # dataArr,labelMat=loadDataSet()
-    # weights=stocGradAscent0(array(dataArr),labelMat)//调用随机梯度
-    # print(weights)
-    # plotBestFit(weights)
+    plotBestFit(weights.getA())
+    weights=stocGradAscent0(array(dataArr),labelMat)
+    print(weights)
+    plotBestFit(weights)
+    weights = stocGradAscent1(array(dataArr), labelMat)
+    print(weights)
+    plotBestFit(weights)
 
 if __name__=='__main__':
     sample()
