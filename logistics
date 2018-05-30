@@ -12,7 +12,7 @@ def loadDataSet()://加载数据并处理成两个列表
 def sigmoid(inX)://sigmoid函数
     return 1.0/(1+exp(-inX))
 
-def gradAscent(dataMatIn,classLabels)://梯度下降法
+def gradAscent(dataMatIn,classLabels)://批量梯度下降法
     dataMatrix=mat(dataMatIn)//列表矩阵化
     labelMat=mat(classLabels).transpose()
     m,n=shape(dataMatrix)
@@ -25,9 +25,19 @@ def gradAscent(dataMatIn,classLabels)://梯度下降法
         weights=weights+alpha*dataMatrix.transpose()*error
     return weights
 
-def plotBestFit(wei)://画图（传入一个梯度下降法下降好的矩阵）
+def stocGradAscent0(dataMatrix,classLabels)://随机梯度下降法
+    m,n=shape(dataMatrix)
+    alpha=0.01
+    weights=ones(n)
+    for i in range(m):
+        h=sigmoid(sum(dataMatrix[i]*weights))
+        error=classLabels[i]-h
+        weights=weights+alpha*error*dataMatrix[i]
+    return weights
+
+def plotBestFit(wei)://画图
     import matplotlib.pyplot as plt
-    weights=wei.getA()
+    weights=wei
     dataMat,labelMat=loadDataSet()
     dataArr=array(dataMat)
     n=shape(dataArr)[0]
@@ -49,11 +59,18 @@ def plotBestFit(wei)://画图（传入一个梯度下降法下降好的矩阵）
     ax.plot(x,y)
     plt.xlabel('X1');plt.xlabel('X2');
     plt.show()
-    
-def sample()://便利函数
-    dataArr,labelMat=loadDataSet()
-    print(gradAscent(dataArr,labelMat))
 
-if __name__=='__main__'://main()
+
+def sample():
+    dataArr,labelMat=loadDataSet()
+    weights=gradAscent(array(dataArr),labelMat)//调用批量梯度
+    print(weights)
+    plotBestFit(weights.getA())//getA（）是区别，作用是把矩阵转化为数组列表
+    # dataArr,labelMat=loadDataSet()
+    # weights=stocGradAscent0(array(dataArr),labelMat)//调用随机梯度
+    # print(weights)
+    # plotBestFit(weights)
+
+if __name__=='__main__':
     sample()
 
